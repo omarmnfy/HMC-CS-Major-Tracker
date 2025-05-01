@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "HMC CS Tracker",
+  "name": "HMC CS Major Tracker",
   "icons": [
     {
       "src": "favicon.ico",

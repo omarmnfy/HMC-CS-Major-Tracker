@@ -1,95 +1,76 @@
-import React, { memo } from 'react';
-import { Requirement, CheckedState, CreditProgress } from '../types';
-import './Roadmap.css';
-import CreditScale from './CreditScale';
+import React from 'react';
+
+interface Course {
+  id: string;
+  name: string;
+  credits?: number;
+}
+
+interface Requirement {
+  id: string;
+  name: string;
+  courses: Course[];
+  type: 'all' | 'one_of' | 'n_of';
+  n?: number;
+}
 
 interface RoadmapProps {
   requirements: Requirement[];
-  checked: CheckedState;
-  creditProgress: CreditProgress;
-  onToggle: (label: string, course: string) => void;
-  onCreditsChange: (label: string, credits: number) => void;
+  completedCourses: string[];
+  onCourseToggle: (courseId: string) => void;
 }
 
-const RequirementStep: React.FC<{
-  requirement: Requirement;
-  checked: CheckedState;
-  creditProgress: CreditProgress;
-  onToggle: (label: string, course: string) => void;
-  onCreditsChange: (label: string, credits: number) => void;
-  isEven: boolean;
-}> = memo(({ requirement, checked, creditProgress, onToggle, onCreditsChange, isEven }) => {
-  console.log('Rendering requirement:', requirement.label);
-  console.log('Is credits type:', requirement.type === 'credits');
-  console.log('Has credits:', requirement.credits);
-  
-  // Calculate how many courses are checked for n_of and one_of type requirements
-  const selectedCount = (requirement.type === 'n_of' || requirement.type === 'one_of') && requirement.courses
-    ? requirement.courses.filter(course => checked[`${requirement.label}::${course}`]).length
-    : 0;
-  
-  const isComplete = (requirement.type === 'n_of' && selectedCount >= (requirement.n || 0)) ||
-                    (requirement.type === 'one_of' && selectedCount >= 1);
-  
+export const Roadmap: React.FC<RoadmapProps> = ({
+  requirements,
+  completedCourses,
+  onCourseToggle,
+}) => {
   return (
-    <div className={`roadmap-step ${isEven ? 'right' : 'left'}`}>
-      <div className="roadmap-circle" />
-      <div className="roadmap-content">
-        <h3 className="roadmap-title">{requirement.label}</h3>
-        {requirement.type === 'credits' && requirement.credits ? (
-          <div className="roadmap-courses">
-            <CreditScale
-              label={`${requirement.subject} ${requirement.level ? `level ${requirement.level}` : ''}`}
-              maxCredits={requirement.credits}
-              currentCredits={creditProgress[requirement.label] || 0}
-              onCreditsChange={(credits) => onCreditsChange(requirement.label, credits)}
-            />
+    <div className="requirements-section">
+      {requirements.map((requirement) => (
+        <div key={requirement.id} className="requirement-card">
+          <div className="requirement-header">
+            <h3 className="requirement-title">{requirement.name}</h3>
+            <div className="requirement-progress">
+              {requirement.type === 'n_of' ? (
+                `${completedCourses.filter(id => 
+                  requirement.courses.some(course => course.id === id)
+                ).length}/${requirement.n} Courses`
+              ) : (
+                `${Math.round(
+                  (completedCourses.filter(id =>
+                    requirement.courses.some(course => course.id === id)
+                  ).length / requirement.courses.length) * 100
+                )}% Complete`
+              )}
+            </div>
           </div>
-        ) : requirement.courses ? (
-          <div className="roadmap-courses">
-            {requirement.courses.map((course) => {
-              const isChecked = !!checked[`${requirement.label}::${course}`];
-              const isDisabled = (requirement.type === 'n_of' || requirement.type === 'one_of') && 
-                               isComplete && !isChecked;
-              
-              return (
-                <label 
-                  key={course} 
-                  className={`roadmap-checkbox ${isDisabled ? 'disabled' : ''}`}
-                >
+          <ul className="course-list">
+            {requirement.courses.map((course, index) => (
+              <React.Fragment key={course.id}>
+                {index > 0 && requirement.type === 'one_of' && (
+                  <li className="divider or">OR</li>
+                )}
+                {index > 0 && requirement.type === 'n_of' && (
+                  <li className="divider and">AND</li>
+                )}
+                <li className="course-item">
                   <input
                     type="checkbox"
-                    checked={isChecked}
-                    onChange={() => onToggle(requirement.label, course)}
-                    aria-label={`${course} - ${requirement.label}`}
-                    disabled={isDisabled}
+                    className="course-checkbox"
+                    checked={completedCourses.includes(course.id)}
+                    onChange={() => onCourseToggle(course.id)}
                   />
-                  <span>{course}</span>
-                </label>
-              );
-            })}
-          </div>
-        ) : null}
-      </div>
+                  <span className="course-name">{course.name}</span>
+                  <span className={`course-status ${completedCourses.includes(course.id) ? 'complete' : 'incomplete'}`}>
+                    {completedCourses.includes(course.id) ? 'Complete' : 'Incomplete'}
+                  </span>
+                </li>
+              </React.Fragment>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
-});
-
-const Roadmap: React.FC<RoadmapProps> = memo(({ requirements, checked, creditProgress, onToggle, onCreditsChange }) => (
-  <div className="elegant-roadmap" role="list">
-    <div className="roadmap-line" />
-    {requirements.map((req, idx) => (
-      <RequirementStep
-        key={`${req.label}-${idx}`}
-        requirement={req}
-        checked={checked}
-        creditProgress={creditProgress}
-        onToggle={onToggle}
-        onCreditsChange={onCreditsChange}
-        isEven={idx % 2 === 0}
-      />
-    ))}
-  </div>
-));
-
-export default Roadmap;
+};

@@ -1,11 +1,17 @@
+export interface Course {
+  id: string;
+  name: string;
+}
+
+export interface OneOfRequirement {
+  type: 'one_of';
+  courses: Course[];
+}
+
 export interface Requirement {
-  label: string;
-  courses?: string[];
-  type: 'all' | 'one_of' | 'n_of' | 'credits';
-  n?: number;
-  subject?: string;
-  credits?: number;
-  level?: number;
+  category: string;
+  name: string;
+  courses: Course[];
 }
 
 export interface Major {

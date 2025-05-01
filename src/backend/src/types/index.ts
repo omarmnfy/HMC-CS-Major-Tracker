@@ -1,7 +1,12 @@
+export interface IOneOfRequirement {
+  type: 'one_of';
+  courses: string[];
+}
+
 export interface IRequirement {
-  type: string;
+  type: 'all' | 'one_of' | 'n_of' | 'credits' | 'mixed';
   label?: string;
-  courses?: string[];
+  courses?: (string | IOneOfRequirement)[];
   n?: number;
   subject?: string;
   credits?: number;

@@ -1,55 +1,49 @@
 import React from 'react';
-import { CircularProgressProps } from '../types';
 
-const CircularProgress: React.FC<CircularProgressProps> = ({ 
-  progress, 
-  size = 120, 
-  strokeWidth = 10,
-  bgColor = "rgba(255, 255, 255, 0.2)",
-  progressColor = "#fff",
-  textColor = "#fff"
-}) => {
-  const radius = (size - strokeWidth) / 2;
+interface CircularProgressProps {
+  progress: number;
+}
+
+export const CircularProgress: React.FC<CircularProgressProps> = ({ progress }) => {
+  const radius = 60;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (progress / 100) * circumference;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <svg width={size} height={size} className="circular-progress">
-      <circle
-        className="circular-progress-bg"
-        stroke={bgColor}
-        fill="none"
-        strokeWidth={strokeWidth}
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-      />
-      <circle
-        className="circular-progress-fg"
-        stroke={progressColor}
-        fill="none"
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-        strokeDasharray={circumference}
-        strokeDashoffset={offset}
-      />
-      <text
-        x="50%"
-        y="50%"
-        textAnchor="middle"
-        dy=".3em"
-        fontSize="2rem"
-        fill={textColor}
-        fontFamily="'Poppins', sans-serif"
-        fontWeight="700"
-      >
-        {progress}%
-      </text>
-    </svg>
+    <div className="circular-progress">
+      <svg width="150" height="150" viewBox="0 0 150 150">
+        <circle
+          className="circular-progress-background"
+          cx="75"
+          cy="75"
+          r={radius}
+          fill="none"
+          stroke="var(--progress-bg)"
+          strokeWidth="10"
+        />
+        <circle
+          className="circular-progress-bar"
+          cx="75"
+          cy="75"
+          r={radius}
+          fill="none"
+          stroke="var(--accent-color)"
+          strokeWidth="10"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          transform="rotate(-90 75 75)"
+        />
+        <text
+          x="75"
+          y="75"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          className="circular-progress-text"
+        >
+          {Math.round(progress)}%
+        </text>
+      </svg>
+    </div>
   );
 };
-
-export default CircularProgress;

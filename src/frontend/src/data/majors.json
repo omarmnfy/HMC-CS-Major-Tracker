@@ -1,121 +1,133 @@
-[
-  {
-    "major": "Computer Science (BS)",
-    "requirements": [
-      {
-        "type": "all",
-        "label": "Required Courses",
-        "courses": [
-          "CSCI 111 - Introduction to Computer Science",
-          "CSCI 112 - Data Structures",
-          "CSCI 209 - Software Development",
-          "CSCI 210 - Computer Organization",
-          "CSCI 211 - Algorithm Design and Analysis",
-          "CSCI 312 - Programming Language Design",
-          "CSCI 313 - Theory of Computation",
-          "MATH 102 - Calculus II",
-          "MATH 222 - Linear Algebra"
-        ]
-      },
-      {
-        "type": "one_of",
-        "label": "Take one course",
-        "courses": [
-          "MATH 121 - Discrete Mathematics I",
-          "MATH 225 - Bridges to Advanced Math"
-        ]
-      },
-      {
-        "type": "n_of",
-        "label": "Two courses chosen from",
-        "n": 2,
-        "courses": [
-          "CSCI 315 - Artificial Intelligence",
-          "CSCI 316 - Advanced Topics in Robotics",
-          "CSCI 317 - Database Systems",
-          "CSCI 319 - Video Game Design",
-          "CSCI 320 - Parallel Computing",
-          "CSCI 321 - Computer Networks",
-          "CSCI 325 - Distributed Systems",
-          "CSCI 326 - Cloud Computing",
-          "CSCI 330 - Operating Systems",
-          "CSCI 332 - Compiler Construction",
-          "CSCI 335 - Software Engineering through Web Applications",
-          "CSCI 339 - Human-Computer Interaction",
-          "CSCI 340 - Computer Graphics"
-        ]
-      },
-      {
-        "type": "credits",
-        "label": "Six additional credits in computer science",
-        "subject": "CSCI",
-        "credits": 6
-      },
-      {
-        "type": "credits",
-        "label": "Six additional credits in mathematics at the 200 level or above",
-        "subject": "MATH",
-        "credits": 6,
-        "level": 200
-      }
-    ]
-  },
-  {
-    "major": "Computer Science (BA)",
-    "requirements": [
-      {
-        "type": "all",
-        "label": "Required Courses",
-        "courses": [
-          "CSCI 111 - Introduction to Computer Science",
-          "CSCI 112 - Data Structures",
-          "CSCI 209 - Software Development",
-          "CSCI 210 - Computer Organization",
-          "CSCI 211 - Algorithm Design and Analysis"
-        ]
-      },
-      {
-        "type": "one_of",
-        "label": "Take one course",
-        "courses": [
-          "MATH 121 - Discrete Mathematics I",
-          "MATH 225 - Bridges to Advanced Math"
-        ]
-      },
-      {
-        "type": "one_of",
-        "label": "Take one course",
-        "courses": [
-          "CSCI 312 - Programming Language Design",
-          "CSCI 313 - Theory of Computation"
-        ]
-      },
-      {
-        "type": "n_of",
-        "label": "Two courses chosen from",
-        "n": 2,
-        "courses": [
-          "CSCI 315 - Artificial Intelligence",
-          "CSCI 316 - Advanced Topics in Robotics",
-          "CSCI 317 - Database Systems",
-          "CSCI 319 - Video Game Design",
-          "CSCI 320 - Parallel Computing",
-          "CSCI 321 - Computer Networks",
-          "CSCI 325 - Distributed Systems",
-          "CSCI 326 - Cloud Computing",
-          "CSCI 330 - Operating Systems",
-          "CSCI 332 - Compiler Construction",
-          "CSCI 335 - Software Engineering through Web Applications",
-          "CSCI 339 - Human-Computer Interaction",
-          "CSCI 340 - Computer Graphics"
-        ]
-      },
-      {
-        "type": "credits",
-        "label": "Six additional credits in computer science",
-        "subject": "CSCI",
-        "credits": 6
-      }
-    ]
-  }
-]
+{
+  "requirements": [
+    {
+      "category": "Core Requirements",
+      "name": "Computer Science Core",
+      "courses": [
+        {
+          "id": "CSCI005",
+          "name": "Introduction to Computer Science",
+          "credits": 3
+        },
+        {
+          "id": "CSCI060",
+          "name": "Principles of Computer Science",
+          "credits": 3
+        },
+        {
+          "id": "CSCI070",
+          "name": "Data Structures and Program Development",
+          "credits": 3
+        },
+        {
+          "id": "CSCI081",
+          "name": "Computer Systems and Programming",
+          "credits": 3
+        },
+        {
+          "id": "CSCI105",
+          "name": "Computer Systems",
+          "credits": 3
+        },
+        {
+          "id": "CSCI121",
+          "name": "Programming Languages",
+          "credits": 3
+        },
+        {
+          "id": "CSCI131",
+          "name": "Algorithms",
+          "credits": 3
+        },
+        {
+          "id": "CSCI140",
+          "name": "Software Development",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "category": "Mathematics",
+      "name": "Mathematics Requirements",
+      "courses": [
+        {
+          "id": "MATH019",
+          "name": "Calculus I",
+          "credits": 3
+        },
+        {
+          "id": "MATH020",
+          "name": "Calculus II",
+          "credits": 3
+        },
+        {
+          "id": "MATH032",
+          "name": "Calculus III",
+          "credits": 3
+        },
+        {
+          "id": "MATH055",
+          "name": "Discrete Mathematics",
+          "credits": 3
+        },
+        {
+          "id": "MATH060",
+          "name": "Linear Algebra",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "category": "Electives",
+      "name": "Computer Science Electives",
+      "courses": [
+        {
+          "id": "CSCI151",
+          "name": "Artificial Intelligence",
+          "credits": 3
+        },
+        {
+          "id": "CSCI152",
+          "name": "Machine Learning",
+          "credits": 3
+        },
+        {
+          "id": "CSCI153",
+          "name": "Computer Graphics",
+          "credits": 3
+        },
+        {
+          "id": "CSCI154",
+          "name": "Computer Networks",
+          "credits": 3
+        },
+        {
+          "id": "CSCI155",
+          "name": "Database Systems",
+          "credits": 3
+        },
+        {
+          "id": "CSCI156",
+          "name": "Operating Systems",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "category": "Senior Project",
+      "name": "Senior Project Requirement",
+      "courses": [
+        {
+          "id": "CSCI190",
+          "name": "Senior Project I",
+          "credits": 3
+        },
+        {
+          "id": "CSCI191",
+          "name": "Senior Project II",
+          "credits": 3
+        }
+      ]
+    }
+  ]
+} 
