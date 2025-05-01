@@ -1,13 +1,22 @@
 import mongoose from 'mongoose';
 import { logger } from '../utils/logger';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/major-tracker';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://wlu_major_tracker_admin:zazo20232005@cluster0.vahqpyb.mongodb.net/major-tracker?retryWrites=true&w=majority&appName=Cluster0';
 
 export const connectDB = async (): Promise<void> => {
   try {
-    logger.info('Attempting to connect to MongoDB at:', MONGODB_URI);
-    await mongoose.connect(MONGODB_URI);
-    logger.info('Connected to MongoDB successfully');
+    logger.info('Attempting to connect to MongoDB Atlas...');
+    
+    // Configure Mongoose options
+    mongoose.set('strictQuery', false);
+    
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      family: 4
+    });
+    
+    logger.info('Connected to MongoDB Atlas successfully');
     
     // Log database events
     mongoose.connection.on('error', (err) => {

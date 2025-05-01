@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Major } from '../types';
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'https://wlu-major-tracker-backend.vercel.app/api'
+  ? process.env.REACT_APP_API_URL || 'https://wlu-major-tracker-backend.vercel.app/api'
   : 'http://localhost:3001/api';
 
 const api = axios.create({

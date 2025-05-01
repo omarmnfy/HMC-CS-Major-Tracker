@@ -77,8 +77,9 @@ npm install
 3. Set up environment variables:
 Create a `.env` file in the backend directory with:
 ```
-PORT=8080
-MONGODB_URI=mongodb://localhost:27017/major-tracker
+PORT=3001
+MONGODB_URI=your_mongodb_connection_string
+NODE_ENV=development
 ```
 
 ### Running the Application
@@ -97,7 +98,7 @@ npm start
 
 3. Access the application:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:8080
+- Backend API: http://localhost:3001
 
 ## API Endpoints
 

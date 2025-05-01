@@ -5,23 +5,24 @@ import { connectDB } from './config/database';
 import majorRoutes from './routes/majorRoutes';
 import { errorHandler } from './middleware/errorHandler';
 import { logger } from './utils/logger';
+import mongoose from 'mongoose';
 
 // Load environment variables
 dotenv.config();
 
 // MongoDB URI is required
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/major-tracker';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://wlu_major_tracker_admin:zazo20232005@cluster0.vahqpyb.mongodb.net/major-tracker?retryWrites=true&w=majority&appName=Cluster0';
 if (!MONGODB_URI) {
   logger.error('MONGODB_URI is not defined');
   process.exit(1);
 }
 
 const app = express();
-const PORT = 3001; // Fixed port for local development
+const PORT = Number(process.env.PORT) || 3001;
 
 // CORS configuration
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://wlu-major-tracker.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -52,7 +53,12 @@ app.get('/', (req, res) => {
 // Health check route
 app.get('/api/health', (req, res) => {
   logger.info('Health check requested');
-  res.json({ status: 'healthy', message: 'Backend server is running!' });
+  res.json({ 
+    status: 'healthy', 
+    message: 'Backend server is running!',
+    port: PORT,
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
 });
 
 // Routes
@@ -78,6 +84,8 @@ app.use(errorHandler);
 const startServer = async (): Promise<void> => {
   try {
     await connectDB();
+    
+    // Kill any existing process on the port
     const server = app.listen(PORT, '127.0.0.1', () => {
       logger.info(`Server is running on http://localhost:${PORT}`);
       logger.info('Available endpoints:');
